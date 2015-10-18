@@ -1,4 +1,4 @@
-package com.sigecloud.ui
+package com.sigecloud.ui.compras
 
 
 import com.sigecloud.ui.compras.PersonaGrid
