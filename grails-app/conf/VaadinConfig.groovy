@@ -3,7 +3,9 @@ vaadin {
     // Your Vaadin UI classes that extends com.vaadin.ui.UI.
     // The application will be available at e.g. http://localhost:8080/grails-vaadin7-demo/
     mapping = [
-            "/compras/*": "com.sigecloud.ui.ComprasUI"
+            //"/compras/*": "com.sigecloud.ui.ComprasUI",
+            "/persona/*": "com.sigecloud.ui.persona.PersonaUI",
+
     ]
 
     // Extra mapping in case you need 'reserve' a URL and it shouldn't be mapped to e.g. /* by Vaadin

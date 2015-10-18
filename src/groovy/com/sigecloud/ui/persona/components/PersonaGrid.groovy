@@ -1,18 +1,13 @@
-package com.sigecloud.ui.compras
+package com.sigecloud.ui.persona.components
 
 import com.sigecloud.PersonaService
 import com.sigecloud.modelo.Persona
+import com.sigecloud.ui.persona.views.PersonaCreateView
 import com.vaadin.data.util.BeanItemContainer
 import com.vaadin.grails.Grails
+import com.vaadin.navigator.Navigator
 import com.vaadin.server.FontAwesome
-import com.vaadin.ui.Button
-import com.vaadin.ui.CustomComponent
-import com.vaadin.ui.Grid
-import com.vaadin.ui.HorizontalLayout
-import com.vaadin.ui.TextField
-import com.vaadin.ui.VerticalLayout
-import com.vaadin.ui.Window
-
+import com.vaadin.ui.*
 
 class PersonaGrid extends CustomComponent {
     Grid personaGrid = new Grid()
@@ -28,10 +23,10 @@ class PersonaGrid extends CustomComponent {
         crearPersonaButton.addClickListener(new Button.ClickListener() {
             @Override
             void buttonClick(Button.ClickEvent clickEvent) {
-                PersonaForm personaForm = new PersonaForm()
-                personaWindow.setModal(true);
-                personaWindow.setContent(personaForm)
-                getUI().addWindow(personaWindow)
+
+                UI ui = UI.getCurrent();
+                Navigator navigator = ui.getNavigator();
+                navigator.navigateTo(PersonaCreateView.VIEW_NAME);
             }
         })
 
