@@ -3,6 +3,7 @@ package com.sigecloud.ui.persona
 import com.sigecloud.ui.comun.Modulo
 import com.sigecloud.ui.persona.components.PersonaGrid
 import com.sigecloud.ui.persona.views.PersonaCreateView
+import com.sigecloud.ui.persona.views.PersonaEditView
 import com.sigecloud.ui.persona.views.PersonaListView
 import com.vaadin.annotations.Theme
 import com.vaadin.navigator.Navigator
@@ -43,8 +44,7 @@ class PersonaUI extends UI{
         navigator.addView("", PersonaListView.class);
         navigator.addView(PersonaListView.VIEW_NAME, PersonaListView.class);
         navigator.addView(PersonaCreateView.VIEW_NAME, PersonaCreateView.class);
-
-
+        navigator.addView(PersonaEditView.VIEW_NAME, PersonaEditView.class);
 
     }
 }

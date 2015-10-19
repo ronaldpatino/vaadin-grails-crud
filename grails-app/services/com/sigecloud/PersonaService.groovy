@@ -14,4 +14,8 @@ class PersonaService {
         persona.save flush:true
     }
 
+
+    Persona find(String id){
+        return Persona.get(id.toInteger())
+    }
 }

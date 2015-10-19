@@ -3,13 +3,16 @@ package com.sigecloud.ui.persona.components
 import com.sigecloud.PersonaService
 import com.sigecloud.modelo.Persona
 import com.sigecloud.ui.persona.views.PersonaCreateView
+import com.sigecloud.ui.persona.views.PersonaEditView
+import com.sigecloud.util.ScNavigation
 import com.vaadin.data.util.BeanItemContainer
+import com.vaadin.event.SelectionEvent
 import com.vaadin.grails.Grails
-import com.vaadin.navigator.Navigator
 import com.vaadin.server.FontAwesome
 import com.vaadin.ui.*
 
-class PersonaGrid extends CustomComponent {
+class PersonaGrid extends CustomComponent implements SelectionEvent.SelectionListener, Button.ClickListener {
+
     Grid personaGrid = new Grid()
     Button crearPersonaButton = new Button("Nueva Persona")
     TextField buscarPersona = new TextField()
@@ -18,17 +21,8 @@ class PersonaGrid extends CustomComponent {
 
     public PersonaGrid() {
 
-
-
-        crearPersonaButton.addClickListener(new Button.ClickListener() {
-            @Override
-            void buttonClick(Button.ClickEvent clickEvent) {
-
-                UI ui = UI.getCurrent();
-                Navigator navigator = ui.getNavigator();
-                navigator.navigateTo(PersonaCreateView.VIEW_NAME);
-            }
-        })
+        crearPersonaButton.addClickListener(this)
+        personaGrid.addSelectionListener(this)
 
         buscarPersona.setInputPrompt("Buscar")
         buscarPersonaButton.setIcon(FontAwesome.SEARCH)
@@ -58,9 +52,31 @@ class PersonaGrid extends CustomComponent {
     }
 
     def refreshPersonaGrid(){
-
         //@TODO agregar solo el row nuevo
         personaGrid.setContainerDataSource(new BeanItemContainer(Persona.class, Grails.get(PersonaService).getPersonas()))
 
+    }
+
+    @Override
+    void select(SelectionEvent selectionEvent) {
+
+        Object selected = ((Grid.SingleSelectionModel) personaGrid.getSelectionModel()).getSelectedRow();
+        if (selected != null) {
+
+            ScNavigation.navigateTo(PersonaEditView.VIEW_NAME + "/" + personaGrid.getContainerDataSource().
+                    getItem(selected)
+                    .getItemProperty("id"))
+        }
+        else {
+            Notification.show("Nothing selected");
+        }
+
+    }
+
+    @Override
+    void buttonClick(Button.ClickEvent clickEvent) {
+        if (clickEvent.getSource() == crearPersonaButton){
+            ScNavigation.navigateTo(PersonaCreateView.VIEW_NAME)
+        }
     }
 }
