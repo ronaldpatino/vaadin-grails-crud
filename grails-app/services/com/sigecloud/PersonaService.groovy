@@ -7,7 +7,8 @@ import grails.transaction.Transactional
 class PersonaService {
 
     List<Persona> getPersonas() {
-        return Persona.list()
+        def personas = Persona.list(sort: "nombre" , order: "asc")
+        return personas
     }
 
     def save(Persona persona){
