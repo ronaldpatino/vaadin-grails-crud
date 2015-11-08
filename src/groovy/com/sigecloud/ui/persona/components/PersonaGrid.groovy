@@ -23,10 +23,14 @@ class PersonaGrid extends CustomComponent implements SelectionEvent.SelectionLis
 
         crearPersonaButton.addClickListener(this)
         personaGrid.addSelectionListener(this)
+        buscarPersonaButton.addClickListener(this)
 
         buscarPersona.setInputPrompt("Buscar")
         buscarPersonaButton.setIcon(FontAwesome.SEARCH)
-        HorizontalLayout buttonLayout = new HorizontalLayout(crearPersonaButton, buscarPersona, buscarPersonaButton)
+
+        HorizontalLayout searchLayout = new HorizontalLayout(buscarPersona, buscarPersonaButton)
+
+        HorizontalLayout buttonLayout = new HorizontalLayout(crearPersonaButton, searchLayout)
         buttonLayout.setSizeFull()
         buttonLayout.setMargin(true)
 
@@ -37,7 +41,6 @@ class PersonaGrid extends CustomComponent implements SelectionEvent.SelectionLis
         personaGrid.addColumn("nombreComercial")
         personaGrid.addColumn("direccion")
         personaGrid.addColumn("telefono")
-        personaGrid.addColumn("tipoPersona")
         personaGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
         personaGrid.setSizeFull()
 
@@ -77,6 +80,24 @@ class PersonaGrid extends CustomComponent implements SelectionEvent.SelectionLis
     void buttonClick(Button.ClickEvent clickEvent) {
         if (clickEvent.getSource() == crearPersonaButton){
             ScNavigation.navigateTo(PersonaCreateView.VIEW_NAME)
+        }
+        else if (clickEvent.getSource() == buscarPersonaButton){
+            if (buscarPersona != null){
+
+                String buscar = buscarPersona.getValue()
+                if (buscar != null ){
+                    BeanItemContainer<List> personas = new BeanItemContainer(Persona.class, Grails.get(PersonaService).search(buscar))
+
+                    if (personas.size()>0){
+                        personaGrid.setContainerDataSource(personas)
+                    }
+                    else {
+                        Notification.show("No se encontraron resultados")
+                    }
+                }
+            }
+
+
         }
     }
 }

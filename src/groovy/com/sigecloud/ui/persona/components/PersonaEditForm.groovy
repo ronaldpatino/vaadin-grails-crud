@@ -26,7 +26,8 @@ class PersonaEditForm extends CustomComponent implements Button.ClickListener{
     TextField email = new TextField("Email")
     TextField telefono = new TextField("Teléfono")
     TextField celular = new TextField("Celular")
-    ComboBox  tipoPersona = new ComboBox("Seleccione el Tipo")
+    CheckBox  esCliente = new CheckBox("Cliente")
+    CheckBox  esProveedor = new CheckBox("Proveedor")
 
     Persona persona
     BeanFieldGroup<Persona> formFieldBindings;
@@ -51,9 +52,9 @@ class PersonaEditForm extends CustomComponent implements Button.ClickListener{
 
         FormLayout formLayout = new FormLayout();
 
-        tipoPersona.setInvalidAllowed(false);
-        tipoPersona.setNullSelectionAllowed(false);
-        TipoPersona.values().each {tipo -> tipoPersona.addItem(tipo)}
+        //tipoPersona.setInvalidAllowed(false);
+        //tipoPersona.setNullSelectionAllowed(false);
+        //TipoPersona.values().each {tipo -> tipoPersona.addItem(tipo)}
 
         formLayout.addComponent(botonesLayout)
         formLayout.addComponent(nombre)
@@ -63,7 +64,9 @@ class PersonaEditForm extends CustomComponent implements Button.ClickListener{
         formLayout.addComponent(email)
         formLayout.addComponent(telefono)
         formLayout.addComponent(celular)
-        formLayout.addComponent(tipoPersona)
+        formLayout.addComponent(esCliente)
+        formLayout.addComponent(esProveedor)
+
 
         //Valores por defecto para form
         nombre.setNullRepresentation("")

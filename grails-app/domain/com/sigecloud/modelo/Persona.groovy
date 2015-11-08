@@ -1,6 +1,4 @@
 package com.sigecloud.modelo
-
-import com.sigecloud.util.TipoPersona
 import org.apache.commons.lang.WordUtils
 
 
@@ -13,7 +11,8 @@ class Persona {
     String email
     String telefono
     String celular
-    TipoPersona tipoPersona
+    Boolean esCliente = false
+    Boolean esProveedor = false
 
     static constraints = {
         nombre maxSize: 255
@@ -23,6 +22,9 @@ class Persona {
         email maxSize: 255
         telefono maxSize: 100
         celular maxSize: 100
+        esCliente defaulValue: "false"
+        esProveedor defaulValue: "false"
+
     }
 
     void setNombre(String s){

@@ -13,7 +13,7 @@ import com.vaadin.data.validator.RegexpValidator
 import com.vaadin.data.validator.StringLengthValidator
 import com.vaadin.grails.Grails
 import com.vaadin.ui.Button
-import com.vaadin.ui.ComboBox
+import com.vaadin.ui.CheckBox
 import com.vaadin.ui.CustomComponent
 import com.vaadin.ui.FormLayout
 import com.vaadin.ui.HorizontalLayout
@@ -35,12 +35,20 @@ class PersonaCreateForm extends CustomComponent implements Button.ClickListener{
     TextField email = new TextField("Email")
     TextField telefono = new TextField("Teléfono")
     TextField celular = new TextField("Celular")
-    ComboBox  tipoPersona = new ComboBox("Seleccione el Tipo")
+    CheckBox  esCliente = new CheckBox("Cliente")
+    CheckBox  esProveedor = new CheckBox("Proveedor")
+
 
     Persona persona = new Persona()
     BeanFieldGroup<Persona> formFieldBindings;
 
     PersonaCreateForm() {
+
+        /**
+         * Depende de donde llames ponemos true o false
+         */
+        esCliente.setValue(true)
+        esProveedor.setValue(true)
 
         VerticalLayout verticalLayout = new VerticalLayout()
 
@@ -59,9 +67,7 @@ class PersonaCreateForm extends CustomComponent implements Button.ClickListener{
 
         FormLayout formLayout = new FormLayout();
 
-        tipoPersona.setInvalidAllowed(false);
-        tipoPersona.setNullSelectionAllowed(false);
-        TipoPersona.values().each {tipo -> tipoPersona.addItem(tipo)}
+        //TipoPersona.values().each {tipo -> tipoPersona.addItem(tipo)}
 
         formLayout.addComponent(botonesLayout)
         formLayout.addComponent(nombre)
@@ -71,7 +77,8 @@ class PersonaCreateForm extends CustomComponent implements Button.ClickListener{
         formLayout.addComponent(email)
         formLayout.addComponent(telefono)
         formLayout.addComponent(celular)
-        formLayout.addComponent(tipoPersona)
+        formLayout.addComponent(esCliente)
+        formLayout.addComponent(esProveedor)
 
         //Valores por defecto para form
         nombre.setNullRepresentation("")
