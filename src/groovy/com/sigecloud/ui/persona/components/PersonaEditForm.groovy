@@ -125,7 +125,13 @@ class PersonaEditForm extends CustomComponent implements Button.ClickListener{
         formFieldBindings.setItemDataSource(persona)
 
         verticalLayout.addComponent(botonesLayout)
-        verticalLayout.addComponent(formLayout)
+
+        Panel panel = new Panel()
+        panel.setSizeFull()
+        panel.setHeight("400px")
+        panel.setContent(formLayout)
+
+        verticalLayout.addComponent(panel)
 
         setCompositionRoot(verticalLayout);
 

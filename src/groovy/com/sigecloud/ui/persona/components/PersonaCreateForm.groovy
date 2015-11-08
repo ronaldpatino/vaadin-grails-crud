@@ -4,7 +4,6 @@ import com.sigecloud.PersonaService
 import com.sigecloud.modelo.Persona
 import com.sigecloud.ui.persona.views.PersonaListView
 import com.sigecloud.util.ScNavigation
-import com.sigecloud.util.TipoPersona
 import com.sigecloud.validaciones.RucValidator
 import com.vaadin.data.fieldgroup.BeanFieldGroup
 import com.vaadin.data.fieldgroup.FieldGroup
@@ -18,6 +17,7 @@ import com.vaadin.ui.CustomComponent
 import com.vaadin.ui.FormLayout
 import com.vaadin.ui.HorizontalLayout
 import com.vaadin.ui.Notification
+import com.vaadin.ui.Panel
 import com.vaadin.ui.TextArea
 import com.vaadin.ui.TextField
 import com.vaadin.ui.VerticalLayout
@@ -136,7 +136,13 @@ class PersonaCreateForm extends CustomComponent implements Button.ClickListener{
         formFieldBindings = BeanFieldGroup.bindFieldsBuffered(persona, this)
 
         verticalLayout.addComponent(botonesLayout)
-        verticalLayout.addComponent(formLayout)
+
+        Panel panel = new Panel()
+        panel.setSizeFull()
+        panel.setHeight("400px")
+        panel.setContent(formLayout)
+
+        verticalLayout.addComponent(panel)
 
         setCompositionRoot(verticalLayout);
 
