@@ -5,6 +5,7 @@ vaadin {
     mapping = [
             //"/compras/*": "com.sigecloud.ui.compras.ComprasUI",
             "/persona/*": "com.sigecloud.ui.persona.PersonaUI",
+            "/factura/*": "com.sigecloud.ui.factura.FacturaUI",
 
     ]
 
