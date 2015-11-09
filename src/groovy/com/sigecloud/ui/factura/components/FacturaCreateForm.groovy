@@ -17,7 +17,7 @@ import com.vaadin.ui.TextField
 import com.vaadin.ui.VerticalLayout
 
 
-class FacturaCreateForm extends  CustomComponent implements Button.ClickListener{
+class FacturaCreateForm extends  CustomComponent implements Button.ClickListener, Property.ValueChangeListener{
 
     Button guardarButton = new Button("Guardar")
     Button cancelButton = new Button("Cancelar")
@@ -37,19 +37,9 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
 
         nombre.setImmediate(true)
 
-        nombre.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent event) {
-                Notification.show("Selected item: " + event.getProperty().getValue(), Notification.Type.HUMANIZED_MESSAGE);
-                // tell the custom container that a value has been selected. This is necessary to ensure that the
-                // selected value is displayed by the ComboBox
-                container.setSelectedCountryBean((Persona) event.getProperty().getValue())
-                Persona persona = new Persona()
-                persona = (Persona) event.getProperty().getValue()
 
-                ruc.setValue(persona.ruc)
-            }
-        });
+
+        nombre.addValueChangeListener(this)
         nombre.setContainerDataSource(container)
 
         GridLayout cabeceraVerticalLayout = new GridLayout(2,4)
@@ -106,6 +96,22 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
 
     @Override
     void buttonClick(Button.ClickEvent clickEvent) {
+
+    }
+
+    @Override
+    void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+
+        if(valueChangeEvent.getProperty() == nombre){
+            Notification.show("Selected item: " + valueChangeEvent.getProperty().getValue(), Notification.Type.HUMANIZED_MESSAGE);
+            // tell the custom container that a value has been selected. This is necessary to ensure that the
+            // selected value is displayed by the ComboBox
+            container.setSelectedCountryBean((Persona) valueChangeEvent.getProperty().getValue())
+            Persona persona = new Persona()
+            persona = (Persona) valueChangeEvent.getProperty().getValue()
+            ruc.setValue(persona.ruc)
+        }
+
 
     }
 }
