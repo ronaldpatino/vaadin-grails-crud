@@ -2,6 +2,7 @@ package com.sigecloud.ui.factura.components
 
 import com.sigecloud.componentes.SuggestingComboBox.SuggestingComboBox
 import com.sigecloud.componentes.SuggestingComboBox.SuggestingContainer
+import com.sigecloud.componetes.Sizer.Sizer
 import com.sigecloud.modelo.Persona
 import com.vaadin.data.Item
 import com.vaadin.data.Property
@@ -65,8 +66,8 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
          * Botones
          */
         HorizontalLayout botonesLayout = new HorizontalLayout(guardarButton, cancelButton)
-        botonesLayout.setMargin(true)
-        botonesLayout.setSpacing(true)
+        botonesLayout.setWidth("12%")
+
         guardarButton.addClickListener(this)
         cancelButton.addClickListener(this)
         agregarElementoButton.addClickListener(this)
@@ -160,7 +161,9 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
         detalleVerticalLayout.addComponent(detalleFacturaTab)
 
         verticalLayout.addComponent(botonesLayout)
+        verticalLayout.addComponent(new Sizer(null, "1em"))
         verticalLayout.addComponent(cabeceraLayout)
+        verticalLayout.addComponent(new Sizer(null, "1em"))
         verticalLayout.addComponent(detalleVerticalLayout)
         setCompositionRoot(verticalLayout);
     }

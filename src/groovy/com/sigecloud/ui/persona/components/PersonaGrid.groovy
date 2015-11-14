@@ -1,6 +1,8 @@
 package com.sigecloud.ui.persona.components
 
 import com.sigecloud.PersonaService
+import com.sigecloud.componentes.SaltoLinea.SaltoLinea
+import com.sigecloud.componetes.Sizer.Sizer
 import com.sigecloud.modelo.Persona
 import com.sigecloud.ui.persona.views.PersonaCreateView
 import com.sigecloud.ui.persona.views.PersonaEditView
@@ -19,20 +21,22 @@ class PersonaGrid extends CustomComponent implements SelectionEvent.SelectionLis
     Button buscarPersonaButton = new Button()
     Window personaWindow = new Window()
 
+
     public PersonaGrid() {
+
 
         crearPersonaButton.addClickListener(this)
         personaGrid.addSelectionListener(this)
         buscarPersonaButton.addClickListener(this)
-
         buscarPersona.setInputPrompt("Buscar")
         buscarPersonaButton.setIcon(FontAwesome.SEARCH)
 
         HorizontalLayout searchLayout = new HorizontalLayout(buscarPersona, buscarPersonaButton)
-
         HorizontalLayout buttonLayout = new HorizontalLayout(crearPersonaButton, searchLayout)
+        buttonLayout.setComponentAlignment(searchLayout ,Alignment.MIDDLE_RIGHT)
         buttonLayout.setSizeFull()
-        buttonLayout.setMargin(true)
+
+        VerticalLayout verticalLayout = new VerticalLayout()
 
         personaGrid.setContainerDataSource(new BeanItemContainer(Persona.class, Grails.get(PersonaService).getPersonas()))
         personaGrid.removeAllColumns()
@@ -44,13 +48,14 @@ class PersonaGrid extends CustomComponent implements SelectionEvent.SelectionLis
         personaGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
         personaGrid.setSizeFull()
 
-        VerticalLayout layoutPersonaGrid = new VerticalLayout()
+        verticalLayout.addComponent(buttonLayout)
+        verticalLayout.addComponent (new Sizer(null, "1em"));
+        verticalLayout.addComponent(personaGrid)
+        verticalLayout.setSizeFull()
 
-        layoutPersonaGrid.addComponent(buttonLayout)
-        layoutPersonaGrid.addComponent(personaGrid)
-        layoutPersonaGrid.setMargin(true)
-        layoutPersonaGrid.setSizeFull()
-        setCompositionRoot(layoutPersonaGrid);
+        setCompositionRoot(verticalLayout);
+
+
 
     }
 
