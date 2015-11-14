@@ -6,9 +6,11 @@ import com.sigecloud.componetes.Sizer.Sizer
 import com.sigecloud.modelo.Persona
 import com.vaadin.data.Item
 import com.vaadin.data.Property
+import com.vaadin.server.FontAwesome
 import com.vaadin.ui.Button
 import com.vaadin.ui.CustomComponent
 import com.vaadin.ui.DateField
+import com.vaadin.ui.FormLayout
 import com.vaadin.ui.Grid
 import com.vaadin.ui.GridLayout
 import com.vaadin.ui.HorizontalLayout
@@ -28,13 +30,13 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
     Button cancelButton = new Button("Cancelar")
     Button agregarElementoButton = new Button("Añadir un elemento")
 
-    SuggestingComboBox nombre = new SuggestingComboBox()
-    DateField fechaFactura = new DateField();
+    SuggestingComboBox nombre = new SuggestingComboBox("Nombre")
+    DateField fechaFactura = new DateField("Fecha de Factura")
     TextField email = new TextField()
-    Label ruc = new Label("")
-    TextField claveDeAcceso = new TextField()
-    TextField numeroAutorizacion = new TextField()
-    TextField numeroFacturaLocal = new TextField()
+    TextField ruc = new TextField("RUC / Cédula")
+    TextField claveDeAcceso = new TextField("Clave de Acceso")
+    TextField numeroAutorizacion = new TextField("Número de Autorización")
+    TextField numeroFactura = new TextField("Nº de factura del proveedor")
     TextField numeroFacturaPuntoEmision = new TextField()
     TextField numeroFacturaSecuecia = new TextField()
 
@@ -52,10 +54,10 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
 
     FacturaCreateForm() {
 
-
         nombre.setImmediate(true)
         nombre.addValueChangeListener(this)
         nombre.setContainerDataSource(container)
+        numeroFactura.setMaxLength(15)
 
         GridLayout cabeceraLayout = new GridLayout(2,4)
         cabeceraLayout.setSizeFull()
@@ -65,8 +67,16 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
         /**
          * Botones
          */
-        HorizontalLayout botonesLayout = new HorizontalLayout(guardarButton, cancelButton)
-        botonesLayout.setWidth("12%")
+        HorizontalLayout botonesLayout = new HorizontalLayout(guardarButton, new Sizer("1em", null) ,cancelButton)
+
+
+        guardarButton.setStyleName("primary")
+        guardarButton.setIcon(FontAwesome.FLOPPY_O)
+        cancelButton.setIcon(FontAwesome.TIMES_CIRCLE_O)
+
+        agregarElementoButton.setStyleName("quiet")
+        agregarElementoButton.setIcon(FontAwesome.PLUS_CIRCLE)
+
 
         guardarButton.addClickListener(this)
         cancelButton.addClickListener(this)
@@ -75,60 +85,30 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
          * Fin Botones
          */
 
-        HorizontalLayout nombreProveedorLayout = new HorizontalLayout()
-        nombreLabel.setWidth("15em")
-        nombre.setWidth("30em")
-        nombreProveedorLayout.addComponent(nombreLabel)
-        nombreProveedorLayout.addComponent(nombre)
+
+        FormLayout izquierda = new FormLayout()
+
+        izquierda.addComponent(nombre)
+        izquierda.addComponent(numeroFactura)
+        izquierda.addComponent(claveDeAcceso)
 
 
-        HorizontalLayout rucProveedorLayout = new HorizontalLayout()
-        rucLabel.setWidth("15em")
-        rucProveedorLayout.addComponent(rucLabel)
-        rucProveedorLayout.addComponent(ruc)
-
-        HorizontalLayout fechaFacturaLayout = new HorizontalLayout()
-        fechaFacturaLabel.setWidth("15em")
-        fechaFacturaLayout.addComponent(fechaFacturaLabel)
-        fechaFacturaLayout.addComponent(fechaFactura)
+        izquierda.addStyleName("light");
+        izquierda. setMargin(true);
 
 
-        HorizontalLayout numeroFacturaProveedorLayout = new HorizontalLayout()
+        FormLayout derecha = new FormLayout()
 
-        numeroFacturaLocal.setMaxLength(3)
-        numeroFacturaLocal.setWidth("3em")
-        numeroFacturaPuntoEmision.setMaxLength(3)
-        numeroFacturaPuntoEmision.setWidth("3em")
-        numeroFacturaSecuecia.setMaxLength(9)
-        numeroFacturaSecuecia.setWidth("9em")
-        numeroFacturaLabel.setWidth("15em")
-        numeroFacturaProveedorLayout.addComponent(numeroFacturaLabel)
-        numeroFacturaProveedorLayout.addComponent(numeroFacturaLocal)
-        numeroFacturaProveedorLayout.addComponent(new Label(" - "))
-        numeroFacturaProveedorLayout.addComponent(numeroFacturaPuntoEmision)
-        numeroFacturaProveedorLayout.addComponent(new Label(" - "))
-        numeroFacturaProveedorLayout.addComponent(numeroFacturaSecuecia)
+        derecha.addComponent(ruc)
+        derecha.addComponent(fechaFactura)
+        derecha.addComponent(numeroAutorizacion)
 
 
-        HorizontalLayout numeroDeAutorizacionLayout = new HorizontalLayout()
-        numeroAutorizacionLabel.setWidth("15em")
-        numeroAutorizacion.setWidth("30em")
-        numeroDeAutorizacionLayout.addComponent(numeroAutorizacionLabel)
-        numeroDeAutorizacionLayout.addComponent(numeroAutorizacion)
+        derecha.addStyleName("light");
+        derecha. setMargin(true);
 
-
-        HorizontalLayout claveDeAccesoLayout = new HorizontalLayout()
-        claveDeAccesoLabel.setWidth("15em")
-        claveDeAcceso.setWidth("30em")
-        claveDeAccesoLayout.addComponent(claveDeAccesoLabel)
-        claveDeAccesoLayout.addComponent(claveDeAcceso)
-
-        cabeceraLayout.addComponent(nombreProveedorLayout, 0,1)
-        cabeceraLayout.addComponent(rucProveedorLayout, 1, 1)
-        cabeceraLayout.addComponent(fechaFacturaLayout, 1,2)
-        cabeceraLayout.addComponent(numeroFacturaProveedorLayout, 0,2 )
-        cabeceraLayout.addComponent(numeroDeAutorizacionLayout, 0,3)
-        cabeceraLayout.addComponent(claveDeAccesoLayout, 1,3)
+        cabeceraLayout.addComponent(izquierda, 0, 1)
+        cabeceraLayout.addComponent(derecha, 1, 1)
 
 
 
@@ -146,9 +126,12 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
         grid.addColumn("impuestos", Integer.class).setHeaderCaption("Impuestos")
         grid.addColumn("total", Integer.class).setHeaderCaption("Monto")
 
-
-        facturaLayout.addComponent(grid)
+        facturaLayout.addComponent(new Sizer(null, "0.1em"))
         facturaLayout.addComponent(agregarElementoButton)
+        facturaLayout.addComponent(new Sizer(null, "0.1em"))
+        facturaLayout.addComponent(grid)
+
+
 
 
         HorizontalLayout pagosLayout = new HorizontalLayout()
@@ -159,6 +142,7 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
 
 
         detalleVerticalLayout.addComponent(detalleFacturaTab)
+
 
         verticalLayout.addComponent(botonesLayout)
         verticalLayout.addComponent(new Sizer(null, "1em"))
@@ -193,7 +177,9 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
             container.setSelectedCountryBean((Persona) valueChangeEvent.getProperty().getValue())
             Persona persona = new Persona()
             persona = (Persona) valueChangeEvent.getProperty().getValue()
+            ruc.readOnly = false
             ruc.setValue(persona.ruc)
+            ruc.readOnly = true
         }
 
 
