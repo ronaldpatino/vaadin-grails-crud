@@ -11,10 +11,10 @@ import com.vaadin.ui.VerticalLayout
  */
 class PersonaListView extends VerticalLayout implements View{
 
-    public static final String VIEW_NAME = "listar";
+    public static final String VIEW_NAME = "listarPersona";
 
     PersonaListView() {
-        super()
+        setMargin(true);
         addComponent(new PersonaGrid())
 
     }

@@ -7,10 +7,10 @@ import com.vaadin.ui.VerticalLayout
 
 class FacturaCreateView  extends VerticalLayout implements View{
 
-    public static final String VIEW_NAME = "crear";
+    public static final String VIEW_NAME = "crearFactura";
 
     FacturaCreateView() {
-        super()
+        setMargin(true);
         FacturaCreateForm factura = new FacturaCreateForm()
         addComponent(factura)
     }

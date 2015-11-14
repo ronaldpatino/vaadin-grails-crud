@@ -17,6 +17,7 @@
 
 # logs
 /stacktrace.log
+/web-app/VAADIN/themes/sigecloud/styles.css
 /test/reports
 /logs
 

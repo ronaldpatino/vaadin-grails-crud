@@ -10,10 +10,10 @@ import com.vaadin.ui.VerticalLayout
  */
 class PersonaCreateView extends VerticalLayout implements View{
 
-    public static final String VIEW_NAME = "crear";
+    public static final String VIEW_NAME = "crearPersona";
 
     PersonaCreateView() {
-        super();
+        setMargin(true);
         PersonaCreateForm persona = new PersonaCreateForm()
         addComponent(persona)
 

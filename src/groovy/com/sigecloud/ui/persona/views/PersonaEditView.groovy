@@ -11,13 +11,13 @@ import com.vaadin.ui.VerticalLayout
 
 class PersonaEditView extends VerticalLayout implements View{
 
-    public static final String VIEW_NAME = "editar";
+    public static final String VIEW_NAME = "editarPersona";
 
     PersonaEditForm personaEditForm
     Persona persona
 
     PersonaEditView() {
-        super();
+        setMargin(true);
     }
 
     @Override
