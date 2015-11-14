@@ -8,6 +8,7 @@ import com.vaadin.data.Property
 import com.vaadin.ui.Button
 import com.vaadin.ui.CustomComponent
 import com.vaadin.ui.DateField
+import com.vaadin.ui.Grid
 import com.vaadin.ui.GridLayout
 import com.vaadin.ui.HorizontalLayout
 import com.vaadin.ui.Label
@@ -17,29 +18,35 @@ import com.vaadin.ui.Table
 
 import com.vaadin.ui.TextField
 import com.vaadin.ui.VerticalLayout
+import com.vaadin.ui.Window
 
 
 class FacturaCreateForm extends  CustomComponent implements Button.ClickListener, Property.ValueChangeListener{
 
     Button guardarButton = new Button("Guardar")
     Button cancelButton = new Button("Cancelar")
+    Button agregarElementoButton = new Button("Añadir un elemento")
 
     SuggestingComboBox nombre = new SuggestingComboBox()
     DateField fechaFactura = new DateField();
     TextField email = new TextField()
-
     Label ruc = new Label("")
+    TextField claveDeAcceso = new TextField()
+    TextField numeroAutorizacion = new TextField()
+    TextField numeroFacturaLocal = new TextField()
+    TextField numeroFacturaPuntoEmision = new TextField()
+    TextField numeroFacturaSecuecia = new TextField()
+
+
     Label rucLabel = new Label("RUC / Cédula")
     Label nombreLabel = new Label("Nombre")
     Label fechaFacturaLabel = new Label("Fecha de Factura")
     Label numeroFacturaLabel = new Label("Nº de factura del proveedor")
+    Label claveDeAccesoLabel = new Label("Clave de Acceso")
+    Label numeroAutorizacionLabel = new Label("Número de Autorización")
 
+    Grid grid = new Grid();
 
-
-
-    TextField numeroFacturaLocal = new TextField()
-    TextField numeroFacturaPuntoEmision = new TextField()
-    TextField numeroFacturaSecuecia = new TextField()
     final SuggestingContainer container = new SuggestingContainer(Persona.class)
 
     FacturaCreateForm() {
@@ -62,6 +69,7 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
         botonesLayout.setSpacing(true)
         guardarButton.addClickListener(this)
         cancelButton.addClickListener(this)
+        agregarElementoButton.addClickListener(this)
         /**
          * Fin Botones
          */
@@ -72,21 +80,17 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
         nombreProveedorLayout.addComponent(nombreLabel)
         nombreProveedorLayout.addComponent(nombre)
 
-        cabeceraLayout.addComponent(nombreProveedorLayout, 0,1)
-
 
         HorizontalLayout rucProveedorLayout = new HorizontalLayout()
         rucLabel.setWidth("15em")
         rucProveedorLayout.addComponent(rucLabel)
         rucProveedorLayout.addComponent(ruc)
-        cabeceraLayout.addComponent(rucProveedorLayout, 1, 1)
 
         HorizontalLayout fechaFacturaLayout = new HorizontalLayout()
         fechaFacturaLabel.setWidth("15em")
         fechaFacturaLayout.addComponent(fechaFacturaLabel)
         fechaFacturaLayout.addComponent(fechaFactura)
 
-        cabeceraLayout.addComponent(fechaFacturaLayout, 1,2)
 
         HorizontalLayout numeroFacturaProveedorLayout = new HorizontalLayout()
 
@@ -104,34 +108,53 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
         numeroFacturaProveedorLayout.addComponent(new Label(" - "))
         numeroFacturaProveedorLayout.addComponent(numeroFacturaSecuecia)
 
+
+        HorizontalLayout numeroDeAutorizacionLayout = new HorizontalLayout()
+        numeroAutorizacionLabel.setWidth("15em")
+        numeroAutorizacion.setWidth("30em")
+        numeroDeAutorizacionLayout.addComponent(numeroAutorizacionLabel)
+        numeroDeAutorizacionLayout.addComponent(numeroAutorizacion)
+
+
+        HorizontalLayout claveDeAccesoLayout = new HorizontalLayout()
+        claveDeAccesoLabel.setWidth("15em")
+        claveDeAcceso.setWidth("30em")
+        claveDeAccesoLayout.addComponent(claveDeAccesoLabel)
+        claveDeAccesoLayout.addComponent(claveDeAcceso)
+
+        cabeceraLayout.addComponent(nombreProveedorLayout, 0,1)
+        cabeceraLayout.addComponent(rucProveedorLayout, 1, 1)
+        cabeceraLayout.addComponent(fechaFacturaLayout, 1,2)
         cabeceraLayout.addComponent(numeroFacturaProveedorLayout, 0,2 )
-
-
-        Table table = new Table("Factura");
-
-
-        table.setSizeFull()
-// Define two columns for the built-in container
-        table.addContainerProperty("Name", String.class, null);
-        table.addContainerProperty("Mag",  Float.class, null);
-
-// Add a row the hard way
-        Object newItemId = table.addItem();
-        Item row1 = table.getItem(newItemId);
-        row1.getItemProperty("Name").setValue("Sirius");
-        row1.getItemProperty("Mag").setValue(-1.46f);
+        cabeceraLayout.addComponent(numeroDeAutorizacionLayout, 0,3)
+        cabeceraLayout.addComponent(claveDeAccesoLayout, 1,3)
 
 
 
+        VerticalLayout facturaLayout = new VerticalLayout()
+
+        grid.setSizeFull();
+        grid.setEditorEnabled(true);
+        grid.setSelectionMode(Grid.SelectionMode.NONE);
+
+        grid.addColumn("index", Integer.class).setHeaderCaption("##")
+        grid.addColumn("codigo", String.class).setHeaderCaption("Codigo")
+        grid.addColumn("descripcion", String.class).setHeaderCaption("Descripcion")
+        grid.addColumn("cantidad", Integer.class).setHeaderCaption("Cantidad")
+        grid.addColumn("precioUnitario", Integer.class).setHeaderCaption("Precio unitario")
+        grid.addColumn("impuestos", Integer.class).setHeaderCaption("Impuestos")
+        grid.addColumn("total", Integer.class).setHeaderCaption("Monto")
 
 
-// Show exactly the currently contained rows (items)
-        table.setPageLength(table.size());
+        facturaLayout.addComponent(grid)
+        facturaLayout.addComponent(agregarElementoButton)
 
 
-        TabSheet detalleFacturaTab = new TabSheet();
+        HorizontalLayout pagosLayout = new HorizontalLayout()
+        TabSheet detalleFacturaTab = new TabSheet()
 
-        detalleFacturaTab.addTab(table,"Factura")
+        detalleFacturaTab.addTab(facturaLayout,"Factura")
+        detalleFacturaTab.addTab(pagosLayout,"Pagos")
 
 
         detalleVerticalLayout.addComponent(detalleFacturaTab)
@@ -144,6 +167,16 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
 
     @Override
     void buttonClick(Button.ClickEvent clickEvent) {
+
+        if(clickEvent.getSource() == agregarElementoButton){
+            ItemAddForm itemAddForm = new ItemAddForm()
+            //itemAddForm.setModal(true)
+            //UI.getCurrent().addWindow(itemAddForm)
+            Window sub = new Window("I'm Modal");
+            sub.setContent(itemAddForm);
+            sub.setModal(true);
+            UI.getCurrent().addWindow(sub);
+        }
 
     }
 

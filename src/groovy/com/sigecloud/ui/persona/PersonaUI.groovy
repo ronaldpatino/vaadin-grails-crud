@@ -12,7 +12,7 @@ import com.vaadin.ui.CssLayout
 import com.vaadin.ui.UI
 import com.vaadin.ui.VerticalLayout
 
-@Theme("valo")
+@Theme("sigecloud")
 class PersonaUI extends UI{
 
     PersonaGrid personaGrid = new PersonaGrid()

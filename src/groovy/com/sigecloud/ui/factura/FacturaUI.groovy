@@ -10,7 +10,7 @@ import com.vaadin.ui.CssLayout
 import com.vaadin.ui.UI
 import com.vaadin.ui.VerticalLayout
 
-@Theme("valo")
+@Theme("sigecloud")
 class FacturaUI extends UI{
 
     FacturaCreateForm facturaCreateForm = new FacturaCreateForm()
@@ -18,8 +18,8 @@ class FacturaUI extends UI{
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
-        CssLayout topBar = new CssLayout()
-        CssLayout viewLayout = new CssLayout()
+        VerticalLayout topBar = new VerticalLayout()
+        VerticalLayout viewLayout = new VerticalLayout()
         VerticalLayout layout = new VerticalLayout()
 
         topBar.setSizeFull()
