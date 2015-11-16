@@ -1,5 +1,9 @@
 package com.sigecloud.ui.general
 
+import com.sigecloud.modelo.Impuesto
+import com.sigecloud.ui.mantenimiento.impuesto.views.ImpuestoCreateView
+import com.sigecloud.ui.mantenimiento.impuesto.views.ImpuestoEditView
+import com.sigecloud.ui.mantenimiento.impuesto.views.ImpuestoListView
 import com.sigecloud.ui.persona.views.PersonaCreateView
 import com.sigecloud.ui.persona.views.PersonaEditView
 import com.vaadin.navigator.ViewChangeListener
@@ -51,9 +55,15 @@ class GeneralUI extends UI {
 
         navigator = new Navigator(this, viewDisplay);
         navigator.addView(FacturaCreateView.VIEW_NAME, FacturaCreateView.class);
+
         navigator.addView(PersonaListView.VIEW_NAME, PersonaListView.class);
         navigator.addView(PersonaCreateView.VIEW_NAME, PersonaCreateView.class);
         navigator.addView(PersonaEditView.VIEW_NAME, PersonaEditView.class);
+
+        navigator.addView(ImpuestoListView.VIEW_NAME, ImpuestoListView.class);
+        navigator.addView(ImpuestoCreateView.VIEW_NAME, ImpuestoCreateView.class);
+        navigator.addView(ImpuestoEditView.VIEW_NAME, ImpuestoEditView.class);
+
 
         final String f = Page.getCurrent().getUriFragment();
 
@@ -98,6 +108,8 @@ class GeneralUI extends UI {
         // Add items
         menuItems.put(PersonaListView.VIEW_NAME, "Personas");
         menuItems.put(FacturaCreateView.VIEW_NAME, "Facturas");
+        menuItems.put(ImpuestoListView.VIEW_NAME, "Impuestos");
+
 
 
 
@@ -126,9 +138,17 @@ class GeneralUI extends UI {
         menuItemsLayout.setPrimaryStyleName("valo-menuitems");
         menu.addComponent(menuItemsLayout);
 
-
+        Label label = null
 
         for (Entry<String, String> item : menuItems.entrySet()) {
+
+            if (item.getKey().equals(ImpuestoListView.VIEW_NAME)) {
+                label = new Label("Mantenimientos", ContentMode.HTML);
+                label.setPrimaryStyleName("valo-menu-subtitle");
+                label.addStyleName("h4");
+                label.setSizeUndefined();
+                menuItemsLayout.addComponent(label);
+            }
 
             String key = item.getKey()
             final Button b = new Button(item.getValue(), new Button.ClickListener() {
