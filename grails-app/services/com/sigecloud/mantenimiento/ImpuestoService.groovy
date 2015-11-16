@@ -25,4 +25,18 @@ class ImpuestoService {
         }
     }
 
+    List<Impuesto> search(String cadena) {
+
+        def criteria = Impuesto.createCriteria()
+
+        def impuestos = criteria.list {
+            or {
+                like ("nombre", "%${cadena}%")
+            }
+            order ("nombre", "asc")
+        }
+
+        return impuestos
+    }
+
 }
