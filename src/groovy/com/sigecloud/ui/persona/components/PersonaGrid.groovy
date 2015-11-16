@@ -1,7 +1,6 @@
 package com.sigecloud.ui.persona.components
 
 import com.sigecloud.PersonaService
-import com.sigecloud.componentes.SaltoLinea.SaltoLinea
 import com.sigecloud.componetes.Sizer.Sizer
 import com.sigecloud.modelo.Persona
 import com.sigecloud.ui.persona.views.PersonaCreateView
