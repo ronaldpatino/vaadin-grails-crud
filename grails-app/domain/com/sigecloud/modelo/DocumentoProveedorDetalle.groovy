@@ -7,7 +7,9 @@ class DocumentoProveedorDetalle {
     BigDecimal valorDescuento
     BigDecimal valor
 
-    static hasOne = [producto: Producto]
+    Producto producto
+
+    static belongsTo = [documentoProveedor: DocumentoProveedor]
 
     static constraints = {
     }

@@ -3,7 +3,7 @@ package com.sigecloud.modelo
 class Impuesto {
 
     String nombre
-    String codigo
+    String codigoImpuesto
     String codigoPorcentaje
 
     BigDecimal porcentaje
