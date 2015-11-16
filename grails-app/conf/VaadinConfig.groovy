@@ -4,10 +4,10 @@ vaadin {
     // The application will be available at e.g. http://localhost:8080/grails-vaadin7-demo/
     mapping = [
             //"/compras/*": "com.sigecloud.ui.compras.ComprasUI",
-            "/persona/*": "com.sigecloud.ui.persona.PersonaUI",
-            "/factura/*": "com.sigecloud.ui.factura.FacturaUI",
-            "/general/*": "com.sigecloud.ui.general.GeneralUI",
-
+            "/persona/*":  "com.sigecloud.ui.persona.PersonaUI",
+            "/factura/*":  "com.sigecloud.ui.factura.FacturaUI",
+            "/general/*":  "com.sigecloud.ui.general.GeneralUI",
+            "/impuesto/*": "com.sigecloud.ui.mantenimiento.impuesto.ImpuestoUI",
     ]
 
     // Extra mapping in case you need 'reserve' a URL and it shouldn't be mapped to e.g. /* by Vaadin
