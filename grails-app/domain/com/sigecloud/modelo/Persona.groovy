@@ -19,9 +19,9 @@ class Persona {
         nombreComercial maxSize: 255
         ruc maxSize: 13
         direccion maxSize: 500
-        email maxSize: 255
-        telefono maxSize: 100
-        celular maxSize: 100
+        email maxSize: 255, nullable: true
+        telefono maxSize: 100, nullable: true
+        celular maxSize: 100, nullable: true
         esCliente defaulValue: "false"
         esProveedor defaulValue: "false"
 
