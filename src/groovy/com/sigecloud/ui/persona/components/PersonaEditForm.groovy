@@ -1,6 +1,7 @@
 package com.sigecloud.ui.persona.components
 
 import com.sigecloud.PersonaService
+import com.sigecloud.componetes.Sizer.Sizer
 import com.sigecloud.modelo.Persona
 import com.sigecloud.ui.persona.views.PersonaListView
 import com.sigecloud.util.ScNavigation
@@ -12,6 +13,7 @@ import com.vaadin.data.validator.EmailValidator
 import com.vaadin.data.validator.RegexpValidator
 import com.vaadin.data.validator.StringLengthValidator
 import com.vaadin.grails.Grails
+import com.vaadin.server.FontAwesome
 import com.vaadin.ui.*
 
 class PersonaEditForm extends CustomComponent implements Button.ClickListener{
@@ -40,9 +42,12 @@ class PersonaEditForm extends CustomComponent implements Button.ClickListener{
         /**
          * Botones
          */
-        HorizontalLayout botonesLayout = new HorizontalLayout(guardarButton, cancelButton)
-        botonesLayout.setMargin(true)
-        botonesLayout.setSpacing(true)
+
+        guardarButton.setStyleName("primary")
+        guardarButton.setIcon(FontAwesome.FLOPPY_O)
+        cancelButton.setIcon(FontAwesome.TIMES_CIRCLE_O)
+
+        HorizontalLayout botonesLayout = new HorizontalLayout(guardarButton, new Sizer("1em", null), cancelButton)
         guardarButton.addClickListener(this)
         cancelButton.addClickListener(this)
         /**
@@ -56,7 +61,8 @@ class PersonaEditForm extends CustomComponent implements Button.ClickListener{
         //tipoPersona.setNullSelectionAllowed(false);
         //TipoPersona.values().each {tipo -> tipoPersona.addItem(tipo)}
 
-        formLayout.addComponent(botonesLayout)
+        formLayout.addStyleName("light");
+        formLayout.setMargin(true);
         formLayout.addComponent(nombre)
         formLayout.addComponent(nombreComercial)
         formLayout.addComponent(ruc)
@@ -125,6 +131,7 @@ class PersonaEditForm extends CustomComponent implements Button.ClickListener{
         formFieldBindings.setItemDataSource(persona)
 
         verticalLayout.addComponent(botonesLayout)
+        verticalLayout.addComponent(new Sizer(null,"1em"))
 
         Panel panel = new Panel()
         panel.setSizeFull()

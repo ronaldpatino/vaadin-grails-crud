@@ -16,7 +16,7 @@ import com.vaadin.ui.*
 class PersonaGrid extends CustomComponent implements SelectionEvent.SelectionListener, Button.ClickListener {
 
     Grid personaGrid = new Grid()
-    Button crearPersonaButton = new Button("Nueva Persona")
+    Button crearPersonaButton = new Button("Crear Nueva Persona")
     TextField buscarPersona = new TextField()
     Button buscarPersonaButton = new Button()
     Window personaWindow = new Window()
@@ -26,10 +26,13 @@ class PersonaGrid extends CustomComponent implements SelectionEvent.SelectionLis
 
 
         crearPersonaButton.addClickListener(this)
+        crearPersonaButton.setIcon(FontAwesome.USER)
+        crearPersonaButton.setStyleName("primary")
         personaGrid.addSelectionListener(this)
         buscarPersonaButton.addClickListener(this)
         buscarPersona.setInputPrompt("Buscar")
         buscarPersonaButton.setIcon(FontAwesome.SEARCH)
+        buscarPersonaButton.setStyleName("primary")
 
         HorizontalLayout searchLayout = new HorizontalLayout(buscarPersona, buscarPersonaButton)
         HorizontalLayout buttonLayout = new HorizontalLayout(crearPersonaButton, searchLayout)

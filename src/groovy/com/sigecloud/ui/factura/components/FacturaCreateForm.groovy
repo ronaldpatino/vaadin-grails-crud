@@ -18,7 +18,7 @@ import com.vaadin.ui.Label
 import com.vaadin.ui.Notification
 import com.vaadin.ui.TabSheet
 import com.vaadin.ui.Table
-
+import com.vaadin.ui.TextArea
 import com.vaadin.ui.TextField
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Window
@@ -31,22 +31,21 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
     Button agregarElementoButton = new Button("Añadir un elemento")
 
     SuggestingComboBox nombre = new SuggestingComboBox("Nombre")
-    DateField fechaFactura = new DateField("Fecha de Factura")
+    DateField fecha = new DateField("Fecha de Factura")
+    DateField fechaVencimiento = new DateField("Fecha de Vencimiento")
+
+    TextArea observacion = new TextArea()
+
     TextField email = new TextField()
     TextField ruc = new TextField("RUC / Cédula")
-    TextField claveDeAcceso = new TextField("Clave de Acceso")
+    TextField claveAcceso = new TextField("Clave de Acceso")
     TextField numeroAutorizacion = new TextField("Número de Autorización")
     TextField numeroFactura = new TextField("Nº de factura del proveedor")
+
+
+
     TextField numeroFacturaPuntoEmision = new TextField()
     TextField numeroFacturaSecuecia = new TextField()
-
-
-    Label rucLabel = new Label("RUC / Cédula")
-    Label nombreLabel = new Label("Nombre")
-    Label fechaFacturaLabel = new Label("Fecha de Factura")
-    Label numeroFacturaLabel = new Label("Nº de factura del proveedor")
-    Label claveDeAccesoLabel = new Label("Clave de Acceso")
-    Label numeroAutorizacionLabel = new Label("Número de Autorización")
 
     Grid grid = new Grid();
 
@@ -73,10 +72,8 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
         guardarButton.setStyleName("primary")
         guardarButton.setIcon(FontAwesome.FLOPPY_O)
         cancelButton.setIcon(FontAwesome.TIMES_CIRCLE_O)
-
         agregarElementoButton.setStyleName("quiet")
         agregarElementoButton.setIcon(FontAwesome.PLUS_CIRCLE)
-
 
         guardarButton.addClickListener(this)
         cancelButton.addClickListener(this)
@@ -90,19 +87,19 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
 
         izquierda.addComponent(nombre)
         izquierda.addComponent(numeroFactura)
-        izquierda.addComponent(claveDeAcceso)
-
+        izquierda.addComponent(claveAcceso)
+        izquierda.addComponent(numeroAutorizacion)
 
         izquierda.addStyleName("light");
-        izquierda. setMargin(true);
+        izquierda.setMargin(true);
 
 
         FormLayout derecha = new FormLayout()
 
         derecha.addComponent(ruc)
-        derecha.addComponent(fechaFactura)
-        derecha.addComponent(numeroAutorizacion)
-
+        derecha.addComponent(fecha)
+        derecha.addComponent(fechaVencimiento)
+        derecha.addComponent(new Sizer(null, "1em"))
 
         derecha.addStyleName("light");
         derecha. setMargin(true);
@@ -135,11 +132,19 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
 
 
         HorizontalLayout pagosLayout = new HorizontalLayout()
+        VerticalLayout observacionLayout = new VerticalLayout()
+
+        observacionLayout.setSizeFull()
+        observacion.setWidth("100%")
+        observacionLayout.addComponent(new Sizer(null, "1em"))
+        observacionLayout.addComponent(observacion)
+
+
         TabSheet detalleFacturaTab = new TabSheet()
 
-        detalleFacturaTab.addTab(facturaLayout,"Factura")
-        detalleFacturaTab.addTab(pagosLayout,"Pagos")
-
+        detalleFacturaTab.addTab(facturaLayout, "Factura")
+        detalleFacturaTab.addTab(observacionLayout, "Observaciones")
+        detalleFacturaTab.addTab(pagosLayout, "Pagos")
 
         detalleVerticalLayout.addComponent(detalleFacturaTab)
 
