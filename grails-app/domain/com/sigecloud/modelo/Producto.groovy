@@ -7,6 +7,10 @@ class Producto {
 
     static hasMany = [impuestos: Impuesto]
 
+    static mapping = {
+        unidadMedida lazy: false
+    }
+
     static constraints = {
     }
 }

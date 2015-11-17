@@ -55,13 +55,12 @@ class ProductoGrid extends CustomComponent implements SelectionEvent.SelectionLi
 
         setCompositionRoot(verticalLayout);
 
-
-
     }
 
     def refreshProductoGrid(){
         //@TODO agregar solo el row nuevo
-        productoGrid.setContainerDataSource(new BeanItemContainer(Producto.class, Grails.get(ProductoService).getProductos()))
+        def productosList = Grails.get(ProductoService).getProductos()
+        productoGrid.setContainerDataSource(new BeanItemContainer(Producto.class, productosList))
 
     }
 
