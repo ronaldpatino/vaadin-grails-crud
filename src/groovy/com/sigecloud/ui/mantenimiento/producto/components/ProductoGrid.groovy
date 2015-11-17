@@ -1,7 +1,7 @@
 package com.sigecloud.ui.mantenimiento.producto.components
 
 
-import com.sigecloud.componetes.Sizer.Sizer
+import com.sigecloud.componentes.Sizer.Sizer
 import com.sigecloud.mantenimiento.ProductoService
 import com.sigecloud.modelo.Producto
 import com.sigecloud.ui.mantenimiento.producto.views.ProductoCreateView

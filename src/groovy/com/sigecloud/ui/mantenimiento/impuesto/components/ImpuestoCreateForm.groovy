@@ -1,6 +1,6 @@
 package com.sigecloud.ui.mantenimiento.impuesto.components
 
-import com.sigecloud.componetes.Sizer.Sizer
+import com.sigecloud.componentes.Sizer.Sizer
 import com.sigecloud.mantenimiento.ImpuestoService
 import com.sigecloud.modelo.Impuesto
 import com.sigecloud.ui.mantenimiento.impuesto.views.ImpuestoListView

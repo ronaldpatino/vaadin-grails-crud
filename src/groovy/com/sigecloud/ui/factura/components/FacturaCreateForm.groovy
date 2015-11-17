@@ -2,9 +2,8 @@ package com.sigecloud.ui.factura.components
 
 import com.sigecloud.componentes.SuggestingComboBox.SuggestingComboBox
 import com.sigecloud.componentes.SuggestingComboBox.SuggestingContainer
-import com.sigecloud.componetes.Sizer.Sizer
+import com.sigecloud.componentes.Sizer.Sizer
 import com.sigecloud.modelo.Persona
-import com.vaadin.data.Item
 import com.vaadin.data.Property
 import com.vaadin.server.FontAwesome
 import com.vaadin.ui.Button
@@ -14,10 +13,8 @@ import com.vaadin.ui.FormLayout
 import com.vaadin.ui.Grid
 import com.vaadin.ui.GridLayout
 import com.vaadin.ui.HorizontalLayout
-import com.vaadin.ui.Label
 import com.vaadin.ui.Notification
 import com.vaadin.ui.TabSheet
-import com.vaadin.ui.Table
 import com.vaadin.ui.TextArea
 import com.vaadin.ui.TextField
 import com.vaadin.ui.VerticalLayout
@@ -162,12 +159,14 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
 
         if(clickEvent.getSource() == agregarElementoButton){
             ItemAddForm itemAddForm = new ItemAddForm()
-            //itemAddForm.setModal(true)
-            //UI.getCurrent().addWindow(itemAddForm)
-            Window sub = new Window("I'm Modal");
-            sub.setContent(itemAddForm);
-            sub.setModal(true);
-            UI.getCurrent().addWindow(sub);
+            Window agregarProductoWindow = new Window("<h4>Agregar Producto a la Factura</h4>");
+            agregarProductoWindow.setCaptionAsHtml(true)
+            agregarProductoWindow.setContent(itemAddForm);
+            agregarProductoWindow.setModal(true);
+            agregarProductoWindow.setClosable(false)
+            agregarProductoWindow.setWidth("50%")
+
+            UI.getCurrent().addWindow(agregarProductoWindow);
         }
 
     }

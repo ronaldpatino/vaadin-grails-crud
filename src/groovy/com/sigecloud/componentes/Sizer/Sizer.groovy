@@ -1,4 +1,4 @@
-package com.sigecloud.componetes.Sizer
+package com.sigecloud.componentes.Sizer
 
 import com.vaadin.ui.Label
 

@@ -1,11 +1,10 @@
 package com.sigecloud.ui.persona.components
 
 import com.sigecloud.PersonaService
-import com.sigecloud.componetes.Sizer.Sizer
+import com.sigecloud.componentes.Sizer.Sizer
 import com.sigecloud.modelo.Persona
 import com.sigecloud.ui.persona.views.PersonaListView
 import com.sigecloud.util.ScNavigation
-import com.sigecloud.util.TipoPersona
 import com.sigecloud.validaciones.RucValidator
 import com.vaadin.data.fieldgroup.BeanFieldGroup
 import com.vaadin.data.fieldgroup.FieldGroup
