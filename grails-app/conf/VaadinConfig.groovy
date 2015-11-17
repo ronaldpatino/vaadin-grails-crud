@@ -8,6 +8,7 @@ vaadin {
             "/factura/*":  "com.sigecloud.ui.factura.FacturaUI",
             "/general/*":  "com.sigecloud.ui.general.GeneralUI",
             "/impuesto/*": "com.sigecloud.ui.mantenimiento.impuesto.ImpuestoUI",
+            "/producto/*": "com.sigecloud.ui.mantenimiento.producto.ProductoUI",
     ]
 
     // Extra mapping in case you need 'reserve' a URL and it shouldn't be mapped to e.g. /* by Vaadin
