@@ -4,13 +4,11 @@ import com.sigecloud.componetes.Sizer.Sizer
 import com.sigecloud.mantenimiento.ProductoService
 import com.sigecloud.mantenimiento.UnidadMedidaService
 import com.sigecloud.modelo.Producto
-import com.sigecloud.modelo.UnidadMedida
 import com.sigecloud.ui.mantenimiento.producto.views.ProductoListView
 import com.sigecloud.util.ScNavigation
 import com.vaadin.data.Property
 import com.vaadin.data.fieldgroup.BeanFieldGroup
 import com.vaadin.data.fieldgroup.FieldGroup
-import com.vaadin.data.util.BeanItemContainer
 import com.vaadin.data.validator.StringLengthValidator
 import com.vaadin.grails.Grails
 import com.vaadin.server.FontAwesome
@@ -52,15 +50,22 @@ class ProductoEditForm extends CustomComponent implements Button.ClickListener, 
 
         FormLayout formLayout = new FormLayout();
 
+        /**
+         * Cargamos el combobox
+         */
 
+        //Sacamos de la DB los items
         def unidadesMedida = Grails.get(UnidadMedidaService).getUnidadMedidas()
 
+        //Cargamos en el componente
         unidadesMedida.each {
             um -> unidadMedidaComboBox.addItem(um.id)
                 unidadMedidaComboBox.setItemCaption(um.id, um.toString())
         }
 
+        //Seteamos el item selecccionado
         unidadMedidaComboBox.setValue(i.unidadMedida.id)
+
 
         formLayout.addStyleName("light");
         formLayout.setMargin(true);
