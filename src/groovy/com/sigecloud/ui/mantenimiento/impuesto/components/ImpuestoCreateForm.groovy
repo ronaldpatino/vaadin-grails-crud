@@ -3,8 +3,6 @@ package com.sigecloud.ui.mantenimiento.impuesto.components
 import com.sigecloud.componetes.Sizer.Sizer
 import com.sigecloud.mantenimiento.ImpuestoService
 import com.sigecloud.modelo.Impuesto
-import com.sigecloud.modelo.Impuesto
-import com.sigecloud.ui.impuesto.views.ImpuestoListView
 import com.sigecloud.ui.mantenimiento.impuesto.views.ImpuestoListView
 import com.sigecloud.util.ScNavigation
 import com.vaadin.data.fieldgroup.BeanFieldGroup
@@ -25,9 +23,8 @@ class ImpuestoCreateForm extends CustomComponent implements Button.ClickListener
     TextField nombre = new TextField("Nombre")
     TextField porcentaje = new TextField("Porcentaje")
     TextField valor = new TextField("Valor")
-    
-    CheckBox  esPorcentaje = new CheckBox("Es Porcentaje")
-    CheckBox  esValor = new CheckBox("Es valor")
+    OptionGroup esPorcentajeValor = new OptionGroup("Impuesto es")
+
 
 
     Impuesto impuesto = new Impuesto()
@@ -38,8 +35,10 @@ class ImpuestoCreateForm extends CustomComponent implements Button.ClickListener
         /**
          * Depende de donde llames ponemos true o false
          */
-        esPorcentaje.setValue(true)
-        esValor.setValue(true)
+        esPorcentajeValor.addItems(Boolean.TRUE , Boolean.FALSE )
+        esPorcentajeValor.setItemCaption(Boolean.TRUE, "Porcentaje")
+        esPorcentajeValor.setItemCaption(Boolean.FALSE, "Valor")
+        esPorcentajeValor.setValue(Boolean.TRUE)
 
         VerticalLayout verticalLayout = new VerticalLayout()
 
@@ -66,27 +65,32 @@ class ImpuestoCreateForm extends CustomComponent implements Button.ClickListener
         formLayout.addStyleName("light");
         formLayout.setMargin(true);
         formLayout.addComponent(nombre)
-        formLayout.addComponent(codigoImpuesto)
-        formLayout.addComponent(codigoPorcentaje)
-        formLayout.addComponent(porcentaje)
-        formLayout.addComponent(valor)
-        formLayout.addComponent(esValor)
-        formLayout.addComponent(esPorcentaje)
+
 
 
         //Valores por defecto para form
         nombre.setNullRepresentation("")
-
+        codigoImpuesto.setNullRepresentation("")
+        codigoPorcentaje.setNullRepresentation("")
+        porcentaje.setNullRepresentation("0.0")
+        valor.setNullRepresentation("0.0")
 
         /**
          * VALIDACIONES
          */
 
         nombre.addValidator(new StringLengthValidator("Debe ingresar un nombre", 3, 255, false))
-
+        codigoImpuesto.addValidator(new StringLengthValidator("Debe el codigo del impuesto", 1, 255, false))
+        codigoPorcentaje.addValidator(new StringLengthValidator("Debe el codigo del porcentaje", 1, 255, false))
+        //porcentaje.addValidator(new StringLengthValidator("Debe ingresar un porcentaje", 1, 5, false))
+        //valor.addValidator(new StringLengthValidator("Debe ingresar un valor", 1, 5, false))
 
         nombre.setImmediate(true);
-
+        nombre.setImmediate(true);
+        codigoImpuesto.setImmediate(true);
+        codigoPorcentaje.setImmediate(true);
+        porcentaje.setImmediate(true);
+        valor.setImmediate(true);
 
         /**
          * FIN VALIDACIONES
@@ -131,7 +135,7 @@ class ImpuestoCreateForm extends CustomComponent implements Button.ClickListener
                 ScNavigation.navigateTo(ImpuestoListView.VIEW_NAME)
             }
             catch (FieldGroup.CommitException e) {
-                Notification.show("You fail!");
+                Notification.show("You fail!" + e.getMessage());
             }
         }
         else {

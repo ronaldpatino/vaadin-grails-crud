@@ -9,8 +9,7 @@ class Impuesto {
     BigDecimal porcentaje
     BigDecimal valor
 
-    Boolean esPorcentaje = false
-    Boolean esValor = false
+    Boolean esPorcentajeValor = false
 
     static constraints = {
     }

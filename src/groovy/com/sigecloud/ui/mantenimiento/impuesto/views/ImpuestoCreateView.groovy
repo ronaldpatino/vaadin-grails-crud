@@ -14,8 +14,8 @@ class ImpuestoCreateView extends VerticalLayout implements View{
 
     ImpuestoCreateView() {
         setMargin(true);
-        ImpuestoCreateForm persona = new ImpuestoCreateForm()
-        addComponent(persona)
+        ImpuestoCreateForm impuestoCreateForm = new ImpuestoCreateForm()
+        addComponent(impuestoCreateForm)
 
     }
 

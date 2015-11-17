@@ -24,8 +24,7 @@ class ImpuestoEditForm extends CustomComponent implements Button.ClickListener{
     TextField porcentaje = new TextField("Porcentaje")
     TextField valor = new TextField("Valor")
 
-    CheckBox  esPorcentaje = new CheckBox("Es Porcentaje")
-    CheckBox  esValor = new CheckBox("Es valor")
+    OptionGroup esPorcentajeValor = new OptionGroup("Impuesto es")
 
 
     Impuesto impuesto = new Impuesto()
@@ -37,8 +36,10 @@ class ImpuestoEditForm extends CustomComponent implements Button.ClickListener{
         /**
          * Depende de donde llames ponemos true o false
          */
-        esPorcentaje.setValue(true)
-        esValor.setValue(true)
+        esPorcentajeValor.addItems(Boolean.TRUE , Boolean.FALSE )
+        esPorcentajeValor.setItemCaption(Boolean.TRUE, "Porcentaje")
+        esPorcentajeValor.setItemCaption(Boolean.FALSE, "Valor")
+        esPorcentajeValor.setValue(Boolean.TRUE)
 
         VerticalLayout verticalLayout = new VerticalLayout()
 
@@ -69,12 +70,17 @@ class ImpuestoEditForm extends CustomComponent implements Button.ClickListener{
         formLayout.addComponent(codigoPorcentaje)
         formLayout.addComponent(porcentaje)
         formLayout.addComponent(valor)
-        formLayout.addComponent(esValor)
-        formLayout.addComponent(esPorcentaje)
+        formLayout.addComponent(esPorcentajeValor)
+
 
 
         //Valores por defecto para form
+        //Valores por defecto para form
         nombre.setNullRepresentation("")
+        codigoImpuesto.setNullRepresentation("")
+        codigoPorcentaje.setNullRepresentation("")
+        porcentaje.setNullRepresentation("0.0")
+        valor.setNullRepresentation("0.0")
 
 
         /**
@@ -82,10 +88,17 @@ class ImpuestoEditForm extends CustomComponent implements Button.ClickListener{
          */
 
         nombre.addValidator(new StringLengthValidator("Debe ingresar un nombre", 3, 255, false))
-
+        codigoImpuesto.addValidator(new StringLengthValidator("Debe el codigo del impuesto", 1, 255, false))
+        codigoPorcentaje.addValidator(new StringLengthValidator("Debe el codigo del porcentaje", 1, 255, false))
+        //porcentaje.addValidator(new StringLengthValidator("Debe ingresar un porcentaje", 1, 5, false))
+        //valor.addValidator(new StringLengthValidator("Debe ingresar un valor", 1, 5, false))
 
         nombre.setImmediate(true);
-
+        nombre.setImmediate(true);
+        codigoImpuesto.setImmediate(true);
+        codigoPorcentaje.setImmediate(true);
+        porcentaje.setImmediate(true);
+        valor.setImmediate(true);
 
         /**
          * FIN VALIDACIONES
