@@ -5,6 +5,7 @@ import com.sigecloud.mantenimiento.ProductoService
 import com.sigecloud.mantenimiento.UnidadMedidaService
 import com.sigecloud.modelo.Producto
 import com.sigecloud.modelo.UnidadMedida
+import com.sigecloud.ui.factura.components.ItemAddForm
 import com.sigecloud.ui.mantenimiento.producto.views.ProductoListView
 import com.sigecloud.util.ScNavigation
 import com.vaadin.data.Property
@@ -19,14 +20,14 @@ class ProductoCreateForm extends CustomComponent implements Button.ClickListener
 
     Button guardarButton = new Button("Guardar")
     Button cancelButton = new Button("Cancelar")
-
+    Button agregarImpuestoButton = new Button("Añadir un Impuesto al Producto")
     TextField nombre = new TextField("Nombre")
     ComboBox unidadMedidaComboBox = new ComboBox("Unidad Medida");
-
-
-
+    Grid impuestoGrid = new Grid();
     Producto producto = new Producto()
     BeanFieldGroup<Producto> formFieldBindings;
+    def impuestosList = []
+
 
     ProductoCreateForm() {
 
@@ -43,17 +44,31 @@ class ProductoCreateForm extends CustomComponent implements Button.ClickListener
         guardarButton.setIcon(FontAwesome.FLOPPY_O)
         cancelButton.setIcon(FontAwesome.TIMES_CIRCLE_O)
 
+        agregarImpuestoButton.setStyleName("quiet")
+        agregarImpuestoButton.setIcon(FontAwesome.PLUS_CIRCLE)
+
         HorizontalLayout botonesLayout = new HorizontalLayout(guardarButton, new Sizer("1em", null), cancelButton)
 
         guardarButton.addClickListener(this)
         cancelButton.addClickListener(this)
+        agregarImpuestoButton.addClickListener(this)
         unidadMedidaComboBox.addValueChangeListener(this)
+
+
         /**
          * Fin Botones
          */
 
 
         FormLayout formLayout = new FormLayout();
+
+        impuestoGrid.setSizeFull();
+        impuestoGrid.setEditorEnabled(true);
+        impuestoGrid.setSelectionMode(Grid.SelectionMode.NONE);
+
+        impuestoGrid.addColumn("nombre", String.class).setHeaderCaption("Nombre")
+        impuestoGrid.addColumn("codigoImpuesto", String.class).setHeaderCaption("Codigo Impuesto")
+        impuestoGrid.addColumn("codigoPorcentaje", String.class).setHeaderCaption("Codigo Porcentaje")
 
 
         def unidadesMedida = Grails.get(UnidadMedidaService).getUnidadMedidas()
@@ -101,12 +116,15 @@ class ProductoCreateForm extends CustomComponent implements Button.ClickListener
 
         verticalLayout.addComponent(botonesLayout)
         verticalLayout.addComponent(new Sizer(null,"1em"))
-        Panel panel = new Panel()
-        panel.setSizeFull()
-        panel.setHeight("400px")
-        panel.setContent(formLayout)
-
-        verticalLayout.addComponent(panel)
+        Panel panelForm = new Panel()
+        panelForm.setSizeFull()
+        panelForm.setContent(formLayout)
+        
+        verticalLayout.addComponent(panelForm)
+        verticalLayout.addComponent(new Sizer(null, "1em"))
+        verticalLayout.addComponent(agregarImpuestoButton)
+        verticalLayout.addComponent(new Sizer(null, "1em"))
+        verticalLayout.addComponent(impuestoGrid)
 
         setCompositionRoot(verticalLayout);
 
@@ -125,10 +143,19 @@ class ProductoCreateForm extends CustomComponent implements Button.ClickListener
                 Notification.show("You fail!" + e.getMessage());
             }
         }
-        else {
+
+        if(clickEvent.getSource() == agregarImpuestoButton){
+            ImpuestoAddWindow agregarImpuestoWindow = new ImpuestoAddWindow()
+            UI.getCurrent().addWindow(agregarImpuestoWindow);
+            print "HELLO"
+        }
+
+        if (clickEvent.getSource() == cancelButton){
             formFieldBindings.discard()
             ScNavigation.navigateTo(ProductoListView.VIEW_NAME)
         }
+
+
 
     }
 

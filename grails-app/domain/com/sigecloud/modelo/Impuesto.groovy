@@ -11,6 +11,10 @@ class Impuesto {
 
     Boolean esPorcentajeValor = false
 
+    String toString(){
+        return this.nombre + "-" + this.codigoImpuesto + "-"  + this.codigoPorcentaje + " "
+    }
+
     static constraints = {
     }
 }

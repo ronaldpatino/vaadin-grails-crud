@@ -2,7 +2,6 @@ package com.sigecloud.ui.factura.components
 
 import com.sigecloud.componentes.Sizer.Sizer
 import com.sigecloud.mantenimiento.ProductoService
-import com.sigecloud.mantenimiento.UnidadMedidaService
 import com.vaadin.annotations.Theme
 import com.vaadin.data.Property
 import com.vaadin.grails.Grails

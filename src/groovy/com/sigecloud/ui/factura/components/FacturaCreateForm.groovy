@@ -39,11 +39,6 @@ class FacturaCreateForm extends  CustomComponent implements Button.ClickListener
     TextField numeroAutorizacion = new TextField("Número de Autorización")
     TextField numeroFactura = new TextField("Nº de factura del proveedor")
 
-
-
-    TextField numeroFacturaPuntoEmision = new TextField()
-    TextField numeroFacturaSecuecia = new TextField()
-
     Grid grid = new Grid();
 
     final SuggestingContainer container = new SuggestingContainer(Persona.class)
