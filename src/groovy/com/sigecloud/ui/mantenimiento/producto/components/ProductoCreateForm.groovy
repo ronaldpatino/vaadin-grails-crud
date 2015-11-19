@@ -1,22 +1,28 @@
 package com.sigecloud.ui.mantenimiento.producto.components
 
+
 import com.sigecloud.componentes.Sizer.Sizer
 import com.sigecloud.mantenimiento.ProductoService
 import com.sigecloud.mantenimiento.UnidadMedidaService
+import com.sigecloud.modelo.Impuesto
 import com.sigecloud.modelo.Producto
 import com.sigecloud.modelo.UnidadMedida
-import com.sigecloud.ui.factura.components.ItemAddForm
 import com.sigecloud.ui.mantenimiento.producto.views.ProductoListView
 import com.sigecloud.util.ScNavigation
 import com.vaadin.data.Property
 import com.vaadin.data.fieldgroup.BeanFieldGroup
 import com.vaadin.data.fieldgroup.FieldGroup
+import com.vaadin.data.util.BeanItemContainer
 import com.vaadin.data.validator.StringLengthValidator
 import com.vaadin.grails.Grails
 import com.vaadin.server.FontAwesome
+import com.vaadin.server.Page
+import com.vaadin.server.ThemeResource
+import com.vaadin.shared.Position
 import com.vaadin.ui.*
 
-class ProductoCreateForm extends CustomComponent implements Button.ClickListener, Property.ValueChangeListener{
+
+class ProductoCreateForm extends CustomComponent implements Button.ClickListener, Property.ValueChangeListener {
 
     Button guardarButton = new Button("Guardar")
     Button cancelButton = new Button("Cancelar")
@@ -26,7 +32,9 @@ class ProductoCreateForm extends CustomComponent implements Button.ClickListener
     Grid impuestoGrid = new Grid();
     Producto producto = new Producto()
     BeanFieldGroup<Producto> formFieldBindings;
-    def impuestosList = []
+    List<Impuesto> impuestosList = new ArrayList<Impuesto>()
+    //Collection<Impuesto> impuestosList = Lists.newArrayList()
+    //Set<Impuesto> impuestosList = new HashSet<Impuesto>()
 
 
     ProductoCreateForm() {
@@ -54,22 +62,21 @@ class ProductoCreateForm extends CustomComponent implements Button.ClickListener
         agregarImpuestoButton.addClickListener(this)
         unidadMedidaComboBox.addValueChangeListener(this)
 
-
         /**
          * Fin Botones
          */
 
 
         FormLayout formLayout = new FormLayout();
-
+        impuestoGrid.setContainerDataSource(new BeanItemContainer(Impuesto.class, impuestosList))
+        impuestoGrid.removeAllColumns()
+        impuestoGrid.addColumn("nombre")
+        impuestoGrid.addColumn("codigoImpuesto")
+        impuestoGrid.addColumn("codigoPorcentaje")
+        impuestoGrid.addColumn("valor")
+        impuestoGrid.addColumn("porcentaje")
+        impuestoGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
         impuestoGrid.setSizeFull();
-        impuestoGrid.setEditorEnabled(true);
-        impuestoGrid.setSelectionMode(Grid.SelectionMode.NONE);
-
-        impuestoGrid.addColumn("nombre", String.class).setHeaderCaption("Nombre")
-        impuestoGrid.addColumn("codigoImpuesto", String.class).setHeaderCaption("Codigo Impuesto")
-        impuestoGrid.addColumn("codigoPorcentaje", String.class).setHeaderCaption("Codigo Porcentaje")
-
 
         def unidadesMedida = Grails.get(UnidadMedidaService).getUnidadMedidas()
 
@@ -115,11 +122,11 @@ class ProductoCreateForm extends CustomComponent implements Button.ClickListener
         formFieldBindings = BeanFieldGroup.bindFieldsBuffered(producto, this)
 
         verticalLayout.addComponent(botonesLayout)
-        verticalLayout.addComponent(new Sizer(null,"1em"))
+        verticalLayout.addComponent(new Sizer(null, "1em"))
         Panel panelForm = new Panel()
         panelForm.setSizeFull()
         panelForm.setContent(formLayout)
-        
+
         verticalLayout.addComponent(panelForm)
         verticalLayout.addComponent(new Sizer(null, "1em"))
         verticalLayout.addComponent(agregarImpuestoButton)
@@ -132,8 +139,8 @@ class ProductoCreateForm extends CustomComponent implements Button.ClickListener
 
     @Override
     void buttonClick(Button.ClickEvent clickEvent) {
-        if (clickEvent.getSource() == guardarButton){
-            try{
+        if (clickEvent.getSource() == guardarButton) {
+            try {
 
                 formFieldBindings.commit()
                 Grails.get(ProductoService).save(producto)
@@ -144,27 +151,62 @@ class ProductoCreateForm extends CustomComponent implements Button.ClickListener
             }
         }
 
-        if(clickEvent.getSource() == agregarImpuestoButton){
-            ImpuestoAddWindow agregarImpuestoWindow = new ImpuestoAddWindow()
+        if (clickEvent.getSource() == agregarImpuestoButton) {
+            ImpuestoAddWindow agregarImpuestoWindow = new ImpuestoAddWindow(new ProductoCreateForm.RespuestaModal() {
+                @Override
+                void impuesto(Impuesto impuesto) {
+
+                    boolean es = false
+
+                    for (Impuesto item : impuestosList){
+                        if (item.nombre == impuesto.nombre){
+                            es = true
+                            break
+                        }
+                    }
+
+                    if (!es){
+                        impuestosList.add(impuesto)
+                        impuestoGrid.setContainerDataSource(new BeanItemContainer(Impuesto.class, impuestosList))
+                    }
+                    else{
+                        Notification notif = new Notification(
+                                "Atención",
+                                "Ya se encuentra agregado el impuesto: " + impuesto.nombre,
+                                Notification.Type.HUMANIZED_MESSAGE,
+                                true);
+
+                        // Customize it
+                        notif.setDelayMsec(20000);
+                        notif.setPosition(Position.TOP_RIGHT);
+                        notif.setIcon(FontAwesome.EXCLAMATION_CIRCLE);
+                        notif.show(Page.getCurrent());
+
+                    }
+
+                }
+            })
             UI.getCurrent().addWindow(agregarImpuestoWindow);
-            print "HELLO"
         }
 
-        if (clickEvent.getSource() == cancelButton){
+        if (clickEvent.getSource() == cancelButton) {
             formFieldBindings.discard()
             ScNavigation.navigateTo(ProductoListView.VIEW_NAME)
         }
-
-
 
     }
 
     @Override
     void valueChange(Property.ValueChangeEvent valueChangeEvent) {
 
-        if(valueChangeEvent.getProperty() == unidadMedidaComboBox){
+        if (valueChangeEvent.getProperty() == unidadMedidaComboBox) {
             producto.unidadMedida = (UnidadMedida) valueChangeEvent.getProperty().getValue()
         }
 
     }
+
+    interface RespuestaModal {
+        public void impuesto(Impuesto impuesto);
+    }
+
 }

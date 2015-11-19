@@ -16,4 +16,17 @@ $v-layout-spacing-horizontal: 6px;
 
 .sigecloud {
   @include valo;
+
+  .v-Notification {
+    background: #3e5264;
+    border: 1px solid #2c4050;
+    color: white;
+  }
+
+  .v-Notification-caption {
+    color: white !important;
+    font-weight: bold;
+  }
+
+
 }

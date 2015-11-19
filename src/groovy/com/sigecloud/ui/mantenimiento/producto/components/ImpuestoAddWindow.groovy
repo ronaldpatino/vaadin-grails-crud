@@ -2,7 +2,6 @@ package com.sigecloud.ui.mantenimiento.producto.components
 
 import com.sigecloud.componentes.Sizer.Sizer
 import com.sigecloud.modelo.Impuesto
-import com.sigecloud.modelo.UnidadMedida
 import com.vaadin.server.FontAwesome
 import com.vaadin.ui.Button
 import com.vaadin.ui.HorizontalLayout
@@ -15,16 +14,17 @@ class ImpuestoAddWindow extends Window implements  Button.ClickListener{
     ImpuestoAddForm impuestoAddForm = new ImpuestoAddForm()
     Button guardarButton = new Button("Guardar")
     Button cancelButton = new Button("Cancelar")
-    Impuesto impuesto
+    ProductoCreateForm.RespuestaModal respuestaModal
 
-    ImpuestoAddWindow(){
+    ImpuestoAddWindow(ProductoCreateForm.RespuestaModal r){
         super("<h4>Agregar Impuesto a Producto</h4>")
+        respuestaModal = r;
         center()
         setCaptionAsHtml(true)
         setCaption("<h4>Agregar Impuesto a Producto</h4>")
         setModal(true);
         setClosable(false)
-        setWidth("50%")
+        setWidth("30%")
 
         VerticalLayout contentLayout = new VerticalLayout()
         HorizontalLayout botonesLayout = new HorizontalLayout(guardarButton, new Sizer("1em", null) ,cancelButton)
@@ -52,7 +52,8 @@ class ImpuestoAddWindow extends Window implements  Button.ClickListener{
         }
 
         if(clickEvent.getSource() == guardarButton){
-            impuesto = impuestoAddForm.impuesto
+            //accedo al valo del form y lo envio como espuesta asyn hacia el parent
+            respuestaModal.impuesto(impuestoAddForm.impuesto)
             UI.getCurrent().removeWindow(this)
         }
 
