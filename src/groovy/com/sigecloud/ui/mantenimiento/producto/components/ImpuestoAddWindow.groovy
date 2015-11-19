@@ -1,7 +1,7 @@
 package com.sigecloud.ui.mantenimiento.producto.components
 
 import com.sigecloud.componentes.Sizer.Sizer
-import com.sigecloud.modelo.Impuesto
+import com.vaadin.event.FieldEvents
 import com.vaadin.server.FontAwesome
 import com.vaadin.ui.Button
 import com.vaadin.ui.HorizontalLayout
@@ -9,7 +9,7 @@ import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Window
 
 
-class ImpuestoAddWindow extends Window implements  Button.ClickListener{
+class ImpuestoAddWindow extends Window implements  Button.ClickListener, FieldEvents.FocusListener{
 
     ImpuestoAddForm impuestoAddForm = new ImpuestoAddForm()
     Button guardarButton = new Button("Guardar")
@@ -36,11 +36,12 @@ class ImpuestoAddWindow extends Window implements  Button.ClickListener{
 
         guardarButton.addClickListener(this)
         cancelButton.addClickListener(this)
+        addFocusListener(this)
 
         contentLayout.addComponent(impuestoAddForm)
         contentLayout.addComponent(botonesLayout)
 
-        setContent(contentLayout);
+        setContent(contentLayout)
 
     }
 
@@ -57,5 +58,12 @@ class ImpuestoAddWindow extends Window implements  Button.ClickListener{
             UI.getCurrent().removeWindow(this)
         }
 
+    }
+
+    @Override
+    void focus(FieldEvents.FocusEvent focusEvent) {
+
+        //requerido para poder setear el foco en la ventana modal
+        impuestoAddForm.productoComboBox.focus()
     }
 }

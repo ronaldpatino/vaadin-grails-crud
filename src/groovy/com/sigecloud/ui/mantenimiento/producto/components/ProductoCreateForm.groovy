@@ -17,7 +17,6 @@ import com.vaadin.data.validator.StringLengthValidator
 import com.vaadin.grails.Grails
 import com.vaadin.server.FontAwesome
 import com.vaadin.server.Page
-import com.vaadin.server.ThemeResource
 import com.vaadin.shared.Position
 import com.vaadin.ui.*
 
@@ -133,6 +132,8 @@ class ProductoCreateForm extends CustomComponent implements Button.ClickListener
         verticalLayout.addComponent(new Sizer(null, "1em"))
         verticalLayout.addComponent(impuestoGrid)
 
+        nombre.focus()
+
         setCompositionRoot(verticalLayout);
 
     }
@@ -186,7 +187,9 @@ class ProductoCreateForm extends CustomComponent implements Button.ClickListener
 
                 }
             })
+
             UI.getCurrent().addWindow(agregarImpuestoWindow);
+
         }
 
         if (clickEvent.getSource() == cancelButton) {
