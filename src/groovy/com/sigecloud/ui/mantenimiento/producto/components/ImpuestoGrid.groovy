@@ -42,8 +42,7 @@ class ImpuestoGrid extends CustomComponent implements SelectionEvent.SelectionLi
         impuestoGrid.addColumn("codigoPorcentaje")
         impuestoGrid.addColumn("porcentaje")
         impuestoGrid.addColumn("valor")
-
-        impuestoGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
+        impuestoGrid.setSelectionMode(Grid.SelectionMode.MULTI);
         impuestoGrid.setSizeFull()
 
         verticalLayout.addComponent(buttonLayout)
@@ -66,13 +65,6 @@ class ImpuestoGrid extends CustomComponent implements SelectionEvent.SelectionLi
     @Override
     void select(SelectionEvent selectionEvent) {
 
-        Object selected = ((Grid.SingleSelectionModel) impuestoGrid.getSelectionModel()).getSelectedRow();
-        if (selected != null) {
-
-        }
-        else {
-            Notification.show("Nothing selected");
-        }
 
     }
 

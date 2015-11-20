@@ -53,7 +53,7 @@ class ImpuestoAddOGWindow extends Window implements  Button.ClickListener{
 
         if(clickEvent.getSource() == guardarButton){
             //accedo al valo del form y lo envio como espuesta asyn hacia el parent
-            respuestaModal.impuesto(impuestoAddOGForm.impuesto)
+            respuestaModal.impuesto(impuestoAddOGForm.impuestoGrid.impuestoGrid.getSelectedRows())
             UI.getCurrent().removeWindow(this)
         }
 

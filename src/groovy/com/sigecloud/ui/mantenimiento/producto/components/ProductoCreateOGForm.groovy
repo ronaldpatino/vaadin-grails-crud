@@ -154,37 +154,14 @@ class ProductoCreateOGForm extends CustomComponent implements Button.ClickListen
 
         if (clickEvent.getSource() == agregarImpuestoButton) {
             ImpuestoAddOGWindow agregarImpuestoWindow = new ImpuestoAddOGWindow(new ProductoCreateOGForm.RespuestaModal() {
+
                 @Override
-                void impuesto(Impuesto impuesto) {
+                void impuesto(Collection<Impuesto> impuestos) {
 
-                    boolean es = false
-
-                    for (Impuesto item : impuestosList){
-                        if (item.nombre == impuesto.nombre){
-                            es = true
-                            break
-                        }
+                    for(Impuesto i: impuestos){
+                        impuestosList.add(i)
                     }
-
-                    if (!es){
-                        impuestosList.add(impuesto)
-                        impuestoGrid.setContainerDataSource(new BeanItemContainer(Impuesto.class, impuestosList))
-                    }
-                    else{
-                        Notification notif = new Notification(
-                                "Atención",
-                                "Ya se encuentra agregado el impuesto: " + impuesto.nombre,
-                                Notification.Type.HUMANIZED_MESSAGE,
-                                true);
-
-                        // Customize it
-                        notif.setDelayMsec(20000);
-                        notif.setPosition(Position.TOP_RIGHT);
-                        notif.setIcon(FontAwesome.EXCLAMATION_CIRCLE);
-                        notif.show(Page.getCurrent());
-
-                    }
-
+                    impuestoGrid.setContainerDataSource(new BeanItemContainer(Impuesto.class, impuestosList))
                 }
             })
 
@@ -209,7 +186,7 @@ class ProductoCreateOGForm extends CustomComponent implements Button.ClickListen
     }
 
     interface RespuestaModal {
-        public void impuesto(Impuesto impuesto);
+        public void impuesto(Collection<Impuesto> impuestos);
     }
 
 }
