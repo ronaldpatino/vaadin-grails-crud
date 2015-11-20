@@ -1,7 +1,6 @@
 package com.sigecloud.ui.mantenimiento.producto.components
 
 import com.sigecloud.componentes.Sizer.Sizer
-import com.vaadin.event.FieldEvents
 import com.vaadin.server.FontAwesome
 import com.vaadin.ui.Button
 import com.vaadin.ui.HorizontalLayout
@@ -9,14 +8,14 @@ import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Window
 
 
-class ImpuestoAddWindow extends Window implements  Button.ClickListener, FieldEvents.FocusListener{
+class ImpuestoAddOGWindow extends Window implements  Button.ClickListener{
 
-    ImpuestoAddForm impuestoAddForm = new ImpuestoAddForm()
+    ImpuestoAddOGForm impuestoAddOGForm = new ImpuestoAddOGForm()
     Button guardarButton = new Button("Guardar")
     Button cancelButton = new Button("Cancelar")
-    ProductoCreateForm.RespuestaModal respuestaModal
+    ProductoCreateOGForm.RespuestaModal respuestaModal
 
-    ImpuestoAddWindow(ProductoCreateForm.RespuestaModal r){
+    ImpuestoAddOGWindow(ProductoCreateOGForm.RespuestaModal r){
         super("<h4>Agregar Impuesto a Producto</h4>")
         respuestaModal = r;
         center()
@@ -36,9 +35,9 @@ class ImpuestoAddWindow extends Window implements  Button.ClickListener, FieldEv
 
         guardarButton.addClickListener(this)
         cancelButton.addClickListener(this)
-        addFocusListener(this)
 
-        contentLayout.addComponent(impuestoAddForm)
+
+        contentLayout.addComponent(impuestoAddOGForm)
         contentLayout.addComponent(botonesLayout)
 
         setContent(contentLayout)
@@ -54,16 +53,10 @@ class ImpuestoAddWindow extends Window implements  Button.ClickListener, FieldEv
 
         if(clickEvent.getSource() == guardarButton){
             //accedo al valo del form y lo envio como espuesta asyn hacia el parent
-            respuestaModal.impuesto(impuestoAddForm.impuesto)
+            respuestaModal.impuesto(impuestoAddOGForm.impuesto)
             UI.getCurrent().removeWindow(this)
         }
 
     }
 
-    @Override
-    void focus(FieldEvents.FocusEvent focusEvent) {
-
-        //requerido para poder setear el foco en la ventana modal
-        impuestoAddForm.productoComboBox.focus()
-    }
 }

@@ -1,6 +1,7 @@
 package com.sigecloud.ui.mantenimiento.producto.views
 
 import com.sigecloud.ui.mantenimiento.producto.components.ProductoCreateForm
+import com.sigecloud.ui.mantenimiento.producto.components.ProductoCreateOGForm
 import com.vaadin.navigator.View
 import com.vaadin.navigator.ViewChangeListener
 import com.vaadin.ui.VerticalLayout
@@ -12,7 +13,7 @@ class ProductoCreateView extends VerticalLayout implements View{
 
     ProductoCreateView() {
         setMargin(true);
-        ProductoCreateForm productoCreateForm = new ProductoCreateForm()
+        ProductoCreateOGForm productoCreateForm = new ProductoCreateOGForm()
         addComponent(productoCreateForm)
 
     }
